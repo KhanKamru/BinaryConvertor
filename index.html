@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Convertor</title>
+   <style>
+      div {
+         background-color: rgb(113, 177, 113);
+         background-size: 100%;
+         /*position:absolute;
+          left: 50%;*/
+         margin: 0 auto;
+         height: 80%;
+         text-align: center;
+         width: 60%;
+      }
+
+      input {
+         width: 70%;
+         height: 40px;
+         background-color: white;
+         font-size: 20px;
+         color: tomato;
+         text-align: center;
+      }
+
+      #btn {
+         background-color: rgb(89, 182, 151);
+         width: 60px;
+         height: 30px;
+         margin-top: 15px;
+      }
+
+      #btn:hover {
+         background-color: greenyellow;
+      }
+   </style>
+</head>
+
+<body>
+   <div>
+      <h1>Binary value</h1>
+      <input type="text" oninput="binaryToall()" id="binaryinput" placeholder="Enter binary number"
+         pattern="[0-10]"><br>
+      <h1>Decimal value</h1>
+      <input type="text" id="decinput" placeholder="Enter decimal number" oninput="decimalToall()">
+      <h1>Octal value</h1>
+      <br><input type="text" id="octalinput" placeholder="Enter octal number" oninput="octToall()">
+      <h1>Hexadecimal value</h1>
+      <input type="text" id="hexainput" placeholder="Enter hexadecimal number" oninput="hexaToall()"><br>
+      <button id="btn" onclick="clearall()">Clear</button>
+   </div>
+   <script>
+      document.getElementById("decinput").addEventListener("input", clear_D);
+      function clear_D() {
+         var val = document.getElementById("decinput").value;
+         var l = document.querySelectorAll('input');
+         if (val == '') {
+            for (let i = 0; i < l.length; i++) {
+               l[i].value = '';
+            }
+         }
+      }
+      document.getElementById("binaryinput").addEventListener("input", clear_B);
+      function clear_B() {
+         var val = document.getElementById("binaryinput").value;
+         var l = document.querySelectorAll('input');
+         if (val == '') {
+            for (let i = 0; i < l.length; i++) {
+               l[i].value = '';
+            }
+         }
+      }
+      document.getElementById("octalinput").addEventListener("input", clear_O);
+      function clear_O() {
+         var val = document.getElementById("octalinput").value;
+         var l = document.querySelectorAll('input');
+         if (val == '') {
+            for (let i = 0; i < l.length; i++) {
+               l[i].value = '';
+            }
+         }
+      }
+      document.getElementById("hexainput").addEventListener("input", clear_H);
+      function clear_H() {
+         var val = document.getElementById("hexainput").value;
+         var l = document.querySelectorAll('input');
+         if (val == '') {
+            for (let i = 0; i < l.length; i++) {
+               l[i].value = '';
+            }
+         }
+      }
+
+      function clearall() {
+         var clear = document.getElementsByTagName("input");
+         for (var i = 0; i < clear.length; i++) {
+            clear[i].value = "";
+         }
+      }
+      function binaryToall() {
+         var r = '';
+         var octal;
+         var oct;
+         var hex;
+         var a = '';
+         var o = '';
+         var assign;
+         var last;
+         var val = document.getElementById("binaryinput").value;
+         if(val==0)
+         {
+            document.getElementById("decinput").value = 0;
+            document.getElementById("hexainput").value = 0;
+            document.getElementById("octalinput").value = 0;
+
+         }
+         decimal = 0;
+         assign = String(val);
+         for (var i = 0; i < assign.length; i++) {
+            if (assign[i] > 1) {
+               document.getElementById("binaryinput").setAttribute("disabled", "true");
+            }
+            val = Number(val);
+            last = val % 10;
+            decimal += last * Math.pow(2, i);
+            val = Math.floor(val / 10);
+         }
+         document.getElementById("decinput").value = decimal;
+         octal = decimal;
+         while (decimal > 0) {
+            hex = decimal % 16;
+            decimal = Math.floor(decimal / 16);
+            hex = String(hex);
+            if (hex == "10") {
+               hex = "A";
+            }
+            else if (hex == "11") {
+               hex = "B";
+            }
+            else if (hex == "12") {
+               hex = "C";
+            }
+            else if (hex == "13") {
+               hex = "D";
+            }
+            else if (hex == "14") {
+               hex = "E";
+            }
+            else if (hex == "15") {
+               hex = "F";
+            }
+            a += hex;
+         }
+         for (let i = (a.length - 1); i >= 0; i--) {
+            r += a[i];
+            document.getElementById("hexainput").value = r;
+         }
+         while (octal > 0) {
+            oct = octal % 8;
+            octal = Math.floor(octal / 8);
+            String(oct);
+            o += oct;
+         }
+         var re = '';
+         for (let i = (o.length - 1); i >= 0; i--) {
+            re += o[i];
+            document.getElementById("octalinput").value = re;
+         }
+      }
+      function decimalToall() {
+         var b = '';
+         var r = '';
+         var octal;
+         var oct;
+         var hex;
+         var a = '';
+         var o = '';
+         var assign;
+         var last;
+         var decimal = document.getElementById("decinput").value;
+         if(decimal==0)
+         {
+            document.getElementById("binaryinput").value = 0000;
+            document.getElementById("hexainput").value = 0;
+            document.getElementById("octalinput").value = 0;
+
+         }
+         var octal = decimal;
+         var binary = decimal;
+         while (decimal > 0) {
+            hex = decimal % 16;
+            decimal = Math.floor(decimal / 16);
+            hex = String(hex);
+            if (hex == "10") {
+               hex = "A";
+            }
+            else if (hex == "11") {
+               hex = "B";
+            }
+            else if (hex == "12") {
+               hex = "C";
+            }
+            else if (hex == "13") {
+               hex = "D";
+            }
+            else if (hex == "14") {
+               hex = "E";
+            }
+            else if (hex == "15") {
+               hex = "F";
+            }
+            a += hex;
+         }
+         for (let i = (a.length - 1); i >= 0; i--) {
+            r += a[i];
+            document.getElementById("hexainput").value = r;
+         }
+         while (octal > 0) {
+            oct = octal % 8;
+            octal = Math.floor(octal / 8);
+            String(oct);
+            o += oct;
+         }
+         var re = '';
+         for (let i = (o.length - 1); i >= 0; i--) {
+            re += o[i];
+            document.getElementById("octalinput").value = re;
+         }
+         while (binary > 0) {
+            last = binary % 2;
+            binary = Math.floor(binary / 2);
+            String(last);
+            b += last;
+         }
+         var ra = '';
+         for (let i = (b.length - 1); i >= 0; i--) {
+            ra += b[i];
+            document.getElementById("binaryinput").value = ra;
+         }
+      }
+      function hexaToall() {
+         var o = '';
+         var b = '';
+         var last;
+         var decimal = 0;
+         var hex = document.getElementById("hexainput").value;
+         if(hex==0)
+         {
+            document.getElementById("binaryinput").value = 0000;
+            document.getElementById("decinput").value = 0;
+            document.getElementById("octalinput").value = 0;
+
+
+         }
+         var assign = String(hex);
+         var l = assign.length;
+         for (let i = 0; i < l; i++) {
+            String(last);
+            var len = (assign.length - 1);
+            last = assign[len];
+            console.log(last);
+            if (last == "A" || last == "a") {
+               last = "10";
+            }
+            else if (last == "B" || last == "b") {
+               last = "11";
+            }
+            else if (last == "C" || last == "c") {
+               last = "12";
+            }
+            else if (last == "D" || last == "d") {
+               last = "13";
+            }
+            else if (last == "E" || last == "e") {
+               last = "14";
+            }
+            else if (last == "F" || last == "f") {
+               last = "15";
+            }
+            Number(last);
+            decimal += last * Math.pow(16, i);
+            assign = assign.slice("0", len);
+         }
+         document.getElementById("decinput").value = decimal;
+         var octal = decimal;
+         while (octal > 0) {
+            oct = octal % 8;
+            octal = Math.floor(octal / 8);
+            String(oct);
+            o += oct;
+         }
+         var re = '';
+         for (let i = (o.length - 1); i >= 0; i--) {
+            re += o[i];
+            document.getElementById("octalinput").value = re;
+         }
+         var binary = decimal;
+         while (binary > 0) {
+            last = binary % 2;
+            binary = Math.floor(binary / 2);
+            String(last);
+            b += last;
+         }
+         var ra = '';
+         for (let i = (b.length - 1); i >= 0; i--) {
+            ra += b[i];
+            document.getElementById("binaryinput").value = ra;
+         }
+      }
+      function octToall() {
+         var a = '';
+         var b = '';
+         var last;
+         var octal = document.getElementById("octalinput").value;
+         if(octal==0)
+         {
+            document.getElementById("binaryinput").value = 0000;
+            document.getElementById("decinput").value = 0;
+            document.getElementById("hexainput").value = 0;
+         }
+         var assign = String(octal);
+         var decimal = 0;
+         for (let i = 0; i < assign.length; i++) {
+            Number(octal);
+            last = octal % 10;
+            decimal += last * Math.pow(8, i);
+            octal = Math.floor(octal / 10);
+         }
+         document.getElementById("decinput").value = decimal;
+         var binary = decimal;
+         while (decimal > 0) {
+            hex = decimal % 16;
+            decimal = Math.floor(decimal / 16);
+            hex = String(hex);
+            if (hex == "10") {
+               hex = "A";
+            }
+            else if (hex == "11") {
+               hex = "B";
+            }
+            else if (hex == "12") {
+               hex = "C";
+            }
+            else if (hex == "13") {
+               hex = "D";
+            }
+            else if (hex == "14") {
+               hex = "E";
+            }
+            else if (hex == "15") {
+               hex = "F";
+            }
+            a += hex;
+         }
+         var r = '';
+         for (let i = (a.length - 1); i >= 0; i--) {
+            r += a[i];
+            document.getElementById("hexainput").value = r;
+         }
+         while (binary > 0) {
+            last = binary % 2;
+            binary = Math.floor(binary / 2);
+            String(last);
+            b += last;
+         }
+         var ra = '';
+         for (let i = (b.length - 1); i >= 0; i--) {
+            ra += b[i];
+            document.getElementById("binaryinput").value = ra;
+         }
+      }
+   </script>
+</body>
+
+</html>
